@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ lead.first_name }} {{ lead.last_name }} | CRM</title>
+</head>
+<body>
+    <a href="/leads">Go back to leads</a>
+    <hr>
+    <h1>This is the details of {{ lead.first_name }}</h1>
+
+    <p>This persons age: {{ lead.age }}</p>
+    <p>The agent responsible for this lead is: {{ lead.agent }}</p>
+
+</body>
+</html>
