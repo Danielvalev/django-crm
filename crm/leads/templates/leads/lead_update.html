@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Update Lead | CRM</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block title %}Update lead | CRM{% endblock %}
+{% block content %}
     <a href="{% url 'leads:lead-detail' lead.pk %}">Go back to {{ lead.first_name }} {{ lead.last_name }}</a>
     <hr>
     <h1>Update lead: {{ lead.first_name }} {{ lead.last_name }}</h1>
@@ -14,5 +10,4 @@
         <button type="submit">Submit</button>
     </form>
 
-</body>
-</html>
+{% endblock content %}

@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Create Lead | CRM</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block title %}Create Lead | CRM{% endblock %}
+{% block content %}
     <a href="{% url 'leads:lead-list' %}">Go back to leads</a>
     <hr>
     <h1>Create a new lead</h1>
@@ -13,6 +9,4 @@
         {{ form.as_p }}
         <button type="submit">Submit</button>
     </form>
-
-</body>
-</html>
+{% endblock content %}
