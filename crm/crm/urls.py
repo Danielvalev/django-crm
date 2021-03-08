@@ -25,6 +25,7 @@ urlpatterns = [
     # path('', landing_page, name='landing-page'),
     path('', LandingPageView.as_view(), name='landing-page'),  # CBV
     path('leads/', include('leads.urls', namespace='leads')),
+    path('agents/', include('agents.urls', namespace='agents')),
     path('register/', RegisterView.as_view(), name='register'),
     path('login/', LoginView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),
