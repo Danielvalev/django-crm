@@ -1,3 +1,4 @@
+import random
 from django.shortcuts import render
 from django.views import generic
 from django.shortcuts import reverse
@@ -25,9 +26,21 @@ class AgentCreateView(OrganisorAndLoginRequiredMixin, generic.CreateView):
         return reverse('agents:agent-list')
 
     def form_valid(self, form):
-        agent = form.save(commit=False)
-        agent.organisation = self.request.user.userprofile
-        agent.save()
+        user = form.save(commit=False)
+        user.is_agent = True
+        user.is_organisor = False
+        user.set_password(f'{random.randint(0, 1000000)}')
+        user.save()
+        Agent.objects.create(
+            user=user,
+            organisation=self.request.user.userprofile,
+        )
+        send_mail(
+            subject='You are invited to be an agent',
+            message='You were added as an agent on CRM.',
+            from_email='admin@crm-test.com',
+            recepient_list=[user.email],
+        )
         return super(AgentCreateView, self).form_valid(form)
 
 
