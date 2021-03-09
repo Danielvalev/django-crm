@@ -101,6 +101,10 @@ class LeadDeleteView(OrganisorAndLoginRequiredMixin, DeleteView):
         return reverse('leads:lead-list')
 
 
+class AssignAgentView(OrganisorAndLoginRequiredMixin, generic.FormView):
+    template_name = 'leads/assign_agent.html'
+    form_class = None
+
 # Functions view
 def landing_page(request):
     return render(request, 'landing.html')
