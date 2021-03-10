@@ -16,6 +16,6 @@ urlpatterns = [
     path('create/', LeadCreateView.as_view(), name='lead-create'),  # CBV
     # path('create/', lead_create, name='lead-create'),
     path('<int:pk>/assign-agent/', AssignAgentView.as_view(), name='assign-agent'),
-    path('category-list/', CategoryListView.as_view(), name='category-list'),
+    path('categories/', CategoryListView.as_view(), name='category-list'),
 
 ]
