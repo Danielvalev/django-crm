@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, reverse
 from django.http import HttpResponse
+from django.contrib import messages
 from .models import Lead, Agent, Category
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -75,12 +76,16 @@ class LeadCreateView(OrganisorAndLoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         # TODO send email
+        lead = form.save(commit=False)
+        lead.organisation = self.request.user.userprofile
+        lead.save()
         send_mail(
             subject='A lead has been created',
             message='Go to the site to see the new lead',
             from_email='test@test.com',
             recipient_list=['test2@test.com'],
         )
+        messages.success(self.request, "You have successfully created a lead")
         return super(LeadCreateView, self).form_valid(form)
 
 
