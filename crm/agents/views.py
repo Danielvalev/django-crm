@@ -38,9 +38,9 @@ class AgentCreateView(OrganisorAndLoginRequiredMixin, generic.CreateView):
         )
         send_mail(
             subject='You are invited to be an agent',
-            message='You were added as an agent on CRM.',
+            message='You were added as an agent on CRM. Please come login to start working.',
             from_email='admin@crm-test.com',
-            recepient_list=[user.email],
+            recepient_list=[user.email]
         )
         return super(AgentCreateView, self).form_valid(form)
 

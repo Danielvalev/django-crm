@@ -1,3 +1,5 @@
+import logging
+import datetime
 from django.shortcuts import render, redirect, reverse
 from django.http import HttpResponse
 from django.contrib import messages
@@ -202,6 +204,40 @@ class LeadCategoryUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_success_url(self):
         return reverse('leads:lead-detail', kwargs={'pk': self.get_object().id})
+
+class DashboardView(OrganisorAndLoginRequiredMixin, generic.TemplateView):
+    template_name = "dashboard.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(DashboardView, self).get_context_data(**kwargs)
+
+        user = self.request.user
+
+        # How many leads we have in total
+        total_lead_count = Lead.objects.filter(organisation=user.userprofile).count()
+
+        # How many new leads in the last 30 days
+        thirty_days_ago = datetime.date.today() - datetime.timedelta(days=30)
+
+        total_in_past30 = Lead.objects.filter(
+            organisation=user.userprofile,
+            date_added__gte=thirty_days_ago
+        ).count()
+
+        # How many converted leads in the last 30 days
+        converted_category = Category.objects.get(name="Converted")
+        converted_in_past30 = Lead.objects.filter(
+            organisation=user.userprofile,
+            category=converted_category,
+            converted_date__gte=thirty_days_ago
+        ).count()
+
+        context.update({
+            "total_lead_count": total_lead_count,
+            "total_in_past30": total_in_past30,
+            "converted_in_past30": converted_in_past30
+        })
+        return context
 
 
 # Functions view
