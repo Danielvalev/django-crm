@@ -1,7 +1,8 @@
 from django import forms
-from .models import Lead, Agent
+from .models import Lead, Agent, Category, FollowUp
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm, UsernameField
+from django.core.exceptions import ValidationError
 
 User = get_user_model()
 
@@ -9,12 +10,23 @@ User = get_user_model()
 class LeadModelForm(forms.ModelForm):
     class Meta:
         model = Lead
-        fields = {
+        fields = (
             'first_name',
             'last_name',
             'age',
             'agent',
-        }
+            'description',
+            'phone_number',
+            'email',
+            'profile_picture'
+        )
+
+    def clean_first_name(self):
+        data = self.cleaned_data['first_name']
+        return data
+
+    def clean(self):
+        pass
 
 
 class LeadForm(forms.Form):
@@ -43,6 +55,23 @@ class AssignAgentForm(forms.Form):
 class LeadCategoryUpdateForm(forms.ModelForm):
     class Meta:
         model = Lead
-        fields = {
+        fields = (
             'category',
-        }
+        )
+
+
+class CategoryModelForm(forms.ModelForm):
+    class Meta:
+        model = Category
+        fields = (
+            'name',
+        )
+
+
+class FollowUpModelForm(forms.ModelForm):
+    class Meta:
+        model = FollowUp
+        fields = (
+            'notes',
+            'file'
+        )
